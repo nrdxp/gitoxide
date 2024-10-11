@@ -21,8 +21,8 @@ mod name_partial {
             };
         }
 
-        mktest!(refs_path, b"refs/heads/main");
-        mktests!(refs_path_san, b"refs/heads/main", "refs/heads/main");
+        mktest!(refs_path, b"refs/heads/master");
+        mktests!(refs_path_san, b"refs/heads/master", "refs/heads/master");
         mktest!(main_worktree_pseudo_ref, b"main-worktree/HEAD");
         mktests!(
             main_worktree_pseudo_ref_san,
@@ -49,17 +49,17 @@ mod name_partial {
             b"refs/worktree/private",
             "refs/worktree/private"
         );
-        mktest!(refs_path_with_file_extension, b"refs/heads/main.ext");
+        mktest!(refs_path_with_file_extension, b"refs/heads/master.ext");
         mktests!(
             refs_path_with_file_extension_san,
-            b"refs/heads/main.ext",
-            "refs/heads/main.ext"
+            b"refs/heads/master.ext",
+            "refs/heads/master.ext"
         );
-        mktest!(refs_path_underscores_and_dashes, b"refs/heads/main-2nd_ext");
+        mktest!(refs_path_underscores_and_dashes, b"refs/heads/master-2nd_ext");
         mktests!(
             refs_path_underscores_and_dashes_san,
-            b"refs/heads/main-2nd_ext",
-            "refs/heads/main-2nd_ext"
+            b"refs/heads/master-2nd_ext",
+            "refs/heads/master-2nd_ext"
         );
         mktest!(relative_path, b"etc/foo");
         mktests!(relative_path_san, b"etc/foo", "etc/foo");
@@ -67,8 +67,8 @@ mod name_partial {
         mktests!(all_uppercase_san, b"MAIN", "MAIN");
         mktest!(all_uppercase_with_underscore, b"NEW_HEAD");
         mktests!(all_uppercase_with_underscore_san, b"NEW_HEAD", "NEW_HEAD");
-        mktest!(partial_name_lowercase, b"main");
-        mktests!(partial_name_lowercase_san, b"main", "main");
+        mktest!(partial_name_lowercase, b"master");
+        mktests!(partial_name_lowercase_san, b"master", "master");
         mktest!(chinese_utf8, "heads/你好吗".as_bytes());
         mktests!(chinese_utf8_san, "heads/你好吗".as_bytes(), "heads/你好吗");
         mktest!(parentheses_special_case_upload_pack, b"(null)");
@@ -137,22 +137,22 @@ mod name_partial {
         mktests!(empty_path_san, b"", "-");
         mktest!(
             refs_starts_with_slash,
-            b"/refs/heads/main",
+            b"/refs/heads/master",
             RefError::Tag(TagError::StartsWithSlash)
         );
-        mktests!(refs_starts_with_slash_san, b"/refs/heads/main", "refs/heads/main");
+        mktests!(refs_starts_with_slash_san, b"/refs/heads/master", "refs/heads/master");
         mktest!(
             ends_with_slash,
-            b"refs/heads/main/",
+            b"refs/heads/master/",
             RefError::Tag(TagError::EndsWithSlash)
         );
-        mktests!(ends_with_slash_san, b"refs/heads/main/", "refs/heads/main");
+        mktests!(ends_with_slash_san, b"refs/heads/master/", "refs/heads/master");
         mktest!(
             path_with_duplicate_slashes,
-            b"refs//heads/main",
+            b"refs//heads/master",
             RefError::Tag(TagError::RepeatedSlash)
         );
-        mktests!(path_with_duplicate_slashes_san, b"refs//heads/main", "refs/heads/main");
+        mktests!(path_with_duplicate_slashes_san, b"refs//heads/master", "refs/heads/master");
         mktest!(
             path_with_spaces,
             b"refs/heads/name with spaces",
@@ -214,19 +214,19 @@ mod name {
             b"refs/worktree/private",
             "refs/worktree/private"
         );
-        mktest!(refs_path, b"refs/heads/main");
-        mktests!(refs_path_san, b"refs/heads/main", "refs/heads/main");
-        mktest!(refs_path_with_file_extension, b"refs/heads/main.ext");
+        mktest!(refs_path, b"refs/heads/master");
+        mktests!(refs_path_san, b"refs/heads/master", "refs/heads/master");
+        mktest!(refs_path_with_file_extension, b"refs/heads/master.ext");
         mktests!(
             refs_path_with_file_extension_san,
-            b"refs/heads/main.ext",
-            "refs/heads/main.ext"
+            b"refs/heads/master.ext",
+            "refs/heads/master.ext"
         );
-        mktest!(refs_path_underscores_and_dashes, b"refs/heads/main-2nd_ext");
+        mktest!(refs_path_underscores_and_dashes, b"refs/heads/master-2nd_ext");
         mktests!(
             refs_path_underscores_and_dashes_san,
-            b"refs/heads/main-2nd_ext",
-            "refs/heads/main-2nd_ext"
+            b"refs/heads/master-2nd_ext",
+            "refs/heads/master-2nd_ext"
         );
         mktest!(relative_path, b"etc/foo");
         mktests!(relative_path_san, b"etc/foo", "etc/foo");
@@ -311,8 +311,8 @@ mod name {
         );
         mktest!(capitalized_name_without_path, b"Main", RefError::SomeLowercase);
         mktests!(capitalized_name_without_path_san, b"Main", "Main");
-        mktest!(lowercase_name_without_path, b"main", RefError::SomeLowercase);
-        mktests!(lowercase_name_without_path_san, b"main", "main");
+        mktest!(lowercase_name_without_path, b"master", RefError::SomeLowercase);
+        mktests!(lowercase_name_without_path_san, b"master", "master");
         mktest!(
             any_path_starts_with_slash,
             b"/etc/foo",
@@ -323,31 +323,31 @@ mod name {
         mktests!(empty_path_san, b"", "-");
         mktest!(
             refs_starts_with_slash,
-            b"/refs/heads/main",
+            b"/refs/heads/master",
             RefError::Tag(TagError::StartsWithSlash)
         );
-        mktests!(refs_starts_with_slash_san, b"/refs/heads/main", "refs/heads/main");
+        mktests!(refs_starts_with_slash_san, b"/refs/heads/master", "refs/heads/master");
         mktest!(
             ends_with_slash,
-            b"refs/heads/main/",
+            b"refs/heads/master/",
             RefError::Tag(TagError::EndsWithSlash)
         );
-        mktests!(ends_with_slash_san, b"refs/heads/main/", "refs/heads/main");
+        mktests!(ends_with_slash_san, b"refs/heads/master/", "refs/heads/master");
         mktest!(
             ends_with_slash_multiple,
-            b"refs/heads/main///",
+            b"refs/heads/master///",
             RefError::Tag(TagError::EndsWithSlash)
         );
-        mktests!(ends_with_slash_multiple_san, b"refs/heads/main///", "refs/heads/main");
+        mktests!(ends_with_slash_multiple_san, b"refs/heads/master///", "refs/heads/master");
         mktest!(
             a_path_with_duplicate_slashes,
-            b"refs//heads/main",
+            b"refs//heads/master",
             RefError::Tag(TagError::RepeatedSlash)
         );
         mktests!(
             a_path_with_duplicate_slashes_san,
-            b"refs//heads/main",
-            "refs/heads/main"
+            b"refs//heads/master",
+            "refs/heads/master"
         );
     }
 }

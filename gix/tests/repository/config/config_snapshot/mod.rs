@@ -64,7 +64,7 @@ fn values_are_set_in_memory_only() {
         let mut config = repo.config_snapshot_mut();
         config.set_raw_value(&"hallo.welt", "true").unwrap();
         config
-            .set_subsection_value(&Branch::MERGE, "main", "refs/heads/foo")
+            .set_subsection_value(&Branch::MERGE, "master", "refs/heads/foo")
             .unwrap();
     }
 

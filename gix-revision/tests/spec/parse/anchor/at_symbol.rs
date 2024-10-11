@@ -68,7 +68,7 @@ fn reflog_by_date_for_hash_is_invalid() {
 #[test]
 fn reflog_by_date_for_given_ref_name() {
     for (spec, expected_ref) in [
-        ("main@{1979-02-26 18:30:00}", "main"),
+        ("main@{1979-02-26 18:30:00}", "master"),
         ("refs/heads/other@{1979-02-26 18:30:00}", "refs/heads/other"),
         (
             "refs/worktree/feature/a@{1979-02-26 18:30:00}",
@@ -88,7 +88,7 @@ fn reflog_by_date_for_given_ref_name() {
 #[test]
 fn reflog_by_entry_for_given_ref_name() {
     for (spec, expected_ref, expected_entry) in [
-        ("main@{0}", "main", 0),
+        ("main@{0}", "master", 0),
         ("refs/heads/other@{42}", "refs/heads/other", 42),
         ("refs/worktree/feature/a@{00100}", "refs/worktree/feature/a", 100),
     ] {
@@ -131,7 +131,7 @@ fn sibling_branch_current_branch() {
 fn sibling_branch_for_branch_name() {
     for (spec, ref_name, kind_name) in [
         ("r1@{U}", "r1", "Upstream"),
-        ("refs/heads/main@{Push}", "refs/heads/main", "Push"),
+        ("refs/heads/master@{Push}", "refs/heads/master", "Push"),
         ("refs/worktree/private@{UpStreaM}", "refs/worktree/private", "Upstream"),
     ] {
         let rec = parse(spec);

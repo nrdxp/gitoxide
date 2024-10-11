@@ -233,7 +233,7 @@ mod arguments {
             arguments.shallow(id("7b333369de1221f9bfbbe03a3a13e9a09bc1c9ff"));
             arguments.want(id("7b333369de1221f9bfbbe03a3a13e9a09bc1c907"));
             arguments.deepen_since(12345);
-            arguments.deepen_not("refs/heads/main".into());
+            arguments.deepen_not("refs/heads/master".into());
             arguments.have(id("0000000000000000000000000000000000000000"));
             arguments.send(&mut t, false).await.expect("sending to buffer to work");
 
@@ -245,13 +245,13 @@ mod arguments {
 0035shallow 7b333369de1221f9bfbbe03a3a13e9a09bc1c9ff
 000ddeepen 1
 0017deepen-since 12345
-001fdeepen-not refs/heads/main
+001fdeepen-not refs/heads/master
 00000032have 0000000000000000000000000000000000000000
 0000005cwant 7b333369de1221f9bfbbe03a3a13e9a09bc1c907 feature-a shallow deepen-since deepen-not
 0035shallow 7b333369de1221f9bfbbe03a3a13e9a09bc1c9ff
 000ddeepen 1
 0017deepen-since 12345
-001fdeepen-not refs/heads/main
+001fdeepen-not refs/heads/master
 00000032have 1111111111111111111111111111111111111111
 0009done
 "
@@ -357,7 +357,7 @@ mod arguments {
                 arguments.deepen_since(12345);
                 arguments.shallow(id("7b333369de1221f9bfbbe03a3a13e9a09bc1c9ff"));
                 arguments.want(id("7b333369de1221f9bfbbe03a3a13e9a09bc1c907"));
-                arguments.deepen_not("refs/heads/main".into());
+                arguments.deepen_not("refs/heads/master".into());
                 arguments.have(id("0000000000000000000000000000000000000000"));
                 arguments.send(&mut t, false).await.expect("sending to buffer to work");
 
@@ -373,7 +373,7 @@ mod arguments {
 0017deepen-since 12345
 0035shallow 7b333369de1221f9bfbbe03a3a13e9a09bc1c9ff
 0032want 7b333369de1221f9bfbbe03a3a13e9a09bc1c907
-001fdeepen-not refs/heads/main
+001fdeepen-not refs/heads/master
 0032have 0000000000000000000000000000000000000000
 00000012command=fetch
 0001000ethin-pack
@@ -383,7 +383,7 @@ mod arguments {
 0017deepen-since 12345
 0035shallow 7b333369de1221f9bfbbe03a3a13e9a09bc1c9ff
 0032want 7b333369de1221f9bfbbe03a3a13e9a09bc1c907
-001fdeepen-not refs/heads/main
+001fdeepen-not refs/heads/master
 0032have 1111111111111111111111111111111111111111
 0009done
 0000"
@@ -399,14 +399,14 @@ mod arguments {
             let mut t = transport(&mut out, false);
             let mut arguments = arguments_v2(["ref-in-want"].iter().copied());
 
-            arguments.want_ref(b"refs/heads/main".as_bstr());
+            arguments.want_ref(b"refs/heads/master".as_bstr());
             arguments.send(&mut t, true).await.expect("sending to buffer to work");
             assert_eq!(
                 out.as_bstr(),
                 b"0012command=fetch
 0001000ethin-pack
 000eofs-delta
-001dwant-ref refs/heads/main
+001dwant-ref refs/heads/master
 0009done
 0000"
                     .as_bstr()

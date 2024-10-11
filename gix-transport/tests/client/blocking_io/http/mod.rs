@@ -261,7 +261,7 @@ fn handshake_v1() -> crate::Result {
             ("allow-tip-sha1-in-want", None),
             ("allow-reachable-sha1-in-want", None),
             ("no-done", None),
-            ("symref", Some("HEAD:refs/heads/main")),
+            ("symref", Some("HEAD:refs/heads/master")),
             ("filter", None),
             ("agent", Some("git/github-gdf51a71f0236"))
         ]
@@ -281,7 +281,7 @@ fn handshake_v1() -> crate::Result {
         refs,
         vec![
             "73a6868963993a3328e7d8fe94e5a6ac5078a944 HEAD",
-            "73a6868963993a3328e7d8fe94e5a6ac5078a944 refs/heads/main",
+            "73a6868963993a3328e7d8fe94e5a6ac5078a944 refs/heads/master",
             "8e472f9ccc7d745927426cbb2d9d077de545aa4e refs/pull/13/head",
             "1a33becbfa6aaf7661824ce40016acb8c179f13c refs/pull/14/head",
             "add2e3e8d155571154c8816cf57f473a6e4d8d31 refs/pull/2/head",

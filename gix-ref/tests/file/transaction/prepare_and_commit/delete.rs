@@ -65,7 +65,7 @@ fn delete_ref_and_reflog_on_symbolic_no_deref() -> crate::Result {
     let (_keep, store) = store_writable("make_repo_for_reflog.sh")?;
     let head = store.find_loose("HEAD")?;
     assert!(head.log_exists(&store));
-    let _main = store.find_loose("main")?;
+    let _main = store.find_loose("master")?;
 
     let edits = store
         .transaction()
@@ -87,7 +87,7 @@ fn delete_ref_and_reflog_on_symbolic_no_deref() -> crate::Result {
         edits,
         vec![RefEdit {
             change: Change::Delete {
-                expected: PreviousValue::MustExistAndMatch(Target::Symbolic("refs/heads/main".try_into()?)),
+                expected: PreviousValue::MustExistAndMatch(Target::Symbolic("refs/heads/master".try_into()?)),
                 log: RefLog::AndReference,
             },
             name: head.name,
@@ -100,7 +100,7 @@ fn delete_ref_and_reflog_on_symbolic_no_deref() -> crate::Result {
         "reflog was deleted"
     );
     assert!(store.try_find_loose("HEAD")?.is_none(), "ref was deleted");
-    assert!(store.try_find_loose("main")?.is_some(), "referent still exists");
+    assert!(store.try_find_loose("master")?.is_some(), "referent still exists");
     Ok(())
 }
 
@@ -113,7 +113,7 @@ fn delete_ref_with_incorrect_previous_value_fails() -> crate::Result {
     let res = store.transaction().prepare(
         Some(RefEdit {
             change: Change::Delete {
-                expected: PreviousValue::MustExistAndMatch(Target::Symbolic("refs/heads/main".try_into()?)),
+                expected: PreviousValue::MustExistAndMatch(Target::Symbolic("refs/heads/master".try_into()?)),
                 log: RefLog::Only,
             },
             name: head.name,
@@ -125,14 +125,14 @@ fn delete_ref_with_incorrect_previous_value_fails() -> crate::Result {
 
     match res {
         Err(err) => {
-            assert_eq!(err.to_string(), "The reference \"refs/heads/main\" should have content ref: refs/heads/main, actual content was 02a7a22d90d7c02fb494ed25551850b868e634f0");
+            assert_eq!(err.to_string(), "The reference \"refs/heads/master\" should have content ref: refs/heads/master, actual content was 02a7a22d90d7c02fb494ed25551850b868e634f0");
         }
         Ok(_) => unreachable!("must be err"),
     }
     // everything stays as is
     let head = store.find_loose("HEAD")?;
     assert!(head.log_exists(&store));
-    let main = store.find_loose("main").expect("referent still exists");
+    let main = store.find_loose("master").expect("referent still exists");
     assert!(main.log_exists(&store));
     Ok(())
 }
@@ -148,7 +148,7 @@ fn delete_reflog_only_of_symbolic_no_deref() -> crate::Result {
         .prepare(
             Some(RefEdit {
                 change: Change::Delete {
-                    expected: PreviousValue::MustExistAndMatch(Target::Symbolic("refs/heads/main".try_into()?)),
+                    expected: PreviousValue::MustExistAndMatch(Target::Symbolic("refs/heads/master".try_into()?)),
                     log: RefLog::Only,
                 },
                 name: head.name,
@@ -162,7 +162,7 @@ fn delete_reflog_only_of_symbolic_no_deref() -> crate::Result {
     assert_eq!(edits.len(), 1);
     let head: Reference = store.find_loose("HEAD")?.into();
     assert!(!head.log_exists(&store));
-    let main = store.find_loose("main").expect("referent still exists");
+    let main = store.find_loose("master").expect("referent still exists");
     assert!(main.log_exists(&store), "log is untouched, too");
     assert_eq!(
         main.target,
@@ -197,7 +197,7 @@ fn delete_reflog_only_of_symbolic_with_deref() -> crate::Result {
     assert_eq!(edits.len(), 2);
     let head: Reference = store.find_loose("HEAD")?.into();
     assert!(!head.log_exists(&store));
-    let main = store.find_loose("main").expect("referent still exists");
+    let main = store.find_loose("master").expect("referent still exists");
     assert!(!main.log_exists(&store), "log is removed");
     assert_eq!(
         main.target,
@@ -349,11 +349,11 @@ fn packed_refs_are_consulted_when_determining_previous_value_of_ref_to_be_delete
 ) -> crate::Result {
     let (_keep, store) = store_writable("make_packed_ref_repository.sh")?;
     assert!(
-        store.try_find_loose("main")?.is_none(),
+        store.try_find_loose("master")?.is_none(),
         "no loose main available, it's packed"
     );
     assert!(
-        store.open_packed_buffer()?.expect("packed").try_find("main")?.is_some(),
+        store.open_packed_buffer()?.expect("packed").try_find("master")?.is_some(),
         "packed main is available"
     );
 
@@ -366,7 +366,7 @@ fn packed_refs_are_consulted_when_determining_previous_value_of_ref_to_be_delete
                     expected: PreviousValue::MustExistAndMatch(Target::Object(old_id)),
                     log: RefLog::AndReference,
                 },
-                name: "refs/heads/main".try_into()?,
+                name: "refs/heads/master".try_into()?,
                 deref: false,
             }),
             Fail::Immediately,
@@ -376,7 +376,7 @@ fn packed_refs_are_consulted_when_determining_previous_value_of_ref_to_be_delete
 
     assert_eq!(edits.len(), 1, "an edit was performed in the packed refs store");
     let packed = store.open_packed_buffer()?.expect("packed ref present");
-    assert!(packed.try_find("main")?.is_none(), "no main present after deletion");
+    assert!(packed.try_find("master")?.is_none(), "no main present after deletion");
     Ok(())
 }
 

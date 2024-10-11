@@ -5,7 +5,7 @@ fn strip_namespace() {
     let ns = gix_ref::namespace::expand("ns").unwrap();
     let mut r = gix_ref::Reference {
         name: {
-            let mut n: FullName = "refs/heads/main".try_into().unwrap();
+            let mut n: FullName = "refs/heads/master".try_into().unwrap();
             n.prefix_namespace(&ns);
             n
         },
@@ -17,7 +17,7 @@ fn strip_namespace() {
         peeled: None,
     };
     r.strip_namespace(&ns);
-    assert_eq!(r.name.as_bstr(), "refs/heads/main", "name is stripped");
+    assert_eq!(r.name.as_bstr(), "refs/heads/master", "name is stripped");
     assert!(
         matches!(r.target, Target::Symbolic(n) if n.as_bstr() == "refs/tags/foo"),
         "and the symbolic target as well"

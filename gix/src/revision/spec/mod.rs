@@ -55,8 +55,8 @@ impl<'repo> Spec<'repo> {
     }
 
     /// Some revision specifications leave information about references which are returned as `(from-ref, to-ref)` here, e.g.
-    /// `HEAD@{-1}..main` might be `(Some(refs/heads/previous-branch), Some(refs/heads/main))`,
-    /// or `@` returns `(Some(refs/heads/main), None)`.
+    /// `HEAD@{-1}..main` might be `(Some(refs/heads/previous-branch), Some(refs/heads/master))`,
+    /// or `@` returns `(Some(refs/heads/master), None)`.
     pub fn into_references(self) -> (Option<Reference<'repo>>, Option<Reference<'repo>>) {
         let repo = self.repo;
         (

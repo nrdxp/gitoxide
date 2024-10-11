@@ -14,7 +14,7 @@ use crate::{bstr::BString, config::tree::Init, ThreadSafeRepository};
 /// # Deviation
 ///
 /// We use `main` instead of `master`.
-pub const DEFAULT_BRANCH_NAME: &str = "main";
+pub const DEFAULT_BRANCH_NAME: &str = "master";
 
 /// The error returned by [`crate::init()`].
 #[derive(Debug, thiserror::Error)]

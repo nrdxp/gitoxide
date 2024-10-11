@@ -16,7 +16,7 @@ pub enum Ref {
     },
     /// A ref pointing to a commit object
     Direct {
-        /// The name at which the ref is located, like `refs/heads/main` or `refs/tags/v1.0` for lightweight tags.
+        /// The name at which the ref is located, like `refs/heads/master` or `refs/tags/v1.0` for lightweight tags.
         full_ref_name: BString,
         /// The hash of the object the ref points to.
         object: gix_hash::ObjectId,
@@ -25,7 +25,7 @@ pub enum Ref {
     Symbolic {
         /// The name at which the symbolic ref is located, like `HEAD`.
         full_ref_name: BString,
-        /// The path of the ref the symbolic ref points to, like `refs/heads/main`.
+        /// The path of the ref the symbolic ref points to, like `refs/heads/master`.
         ///
         /// See issue [#205] for details
         ///
@@ -43,7 +43,7 @@ pub enum Ref {
     Unborn {
         /// The name at which the ref is located, typically `HEAD`.
         full_ref_name: BString,
-        /// The path of the ref the symbolic ref points to, like `refs/heads/main`, even though the `target` does not yet exist.
+        /// The path of the ref the symbolic ref points to, like `refs/heads/master`, even though the `target` does not yet exist.
         target: BString,
     },
 }

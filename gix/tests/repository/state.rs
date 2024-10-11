@@ -4,7 +4,7 @@ use crate::{named_repo, Result};
 fn apply_mailbox() -> Result {
     let repo = named_repo("make_am_repo.sh")?;
 
-    assert_eq!(repo.head_name()?.unwrap().shorten(), "main");
+    assert_eq!(repo.head_name()?.unwrap().shorten(), "master");
     assert_eq!(repo.state(), Some(gix::state::InProgress::ApplyMailbox));
     Ok(())
 }
@@ -13,7 +13,7 @@ fn apply_mailbox() -> Result {
 fn bisect() -> Result {
     let repo = named_repo("make_bisect_repo.sh")?;
 
-    assert_eq!(repo.head_name()?.unwrap().shorten(), "main");
+    assert_eq!(repo.head_name()?.unwrap().shorten(), "master");
     assert_eq!(repo.state(), Some(gix::state::InProgress::Bisect));
 
     Ok(())
@@ -23,7 +23,7 @@ fn bisect() -> Result {
 fn cherry_pick() -> Result {
     let repo = named_repo("make_cherry_pick_repo.sh")?;
 
-    assert_eq!(repo.head_name()?.unwrap().shorten(), "main");
+    assert_eq!(repo.head_name()?.unwrap().shorten(), "master");
     assert_eq!(repo.state(), Some(gix::state::InProgress::CherryPick));
     Ok(())
 }
@@ -32,7 +32,7 @@ fn cherry_pick() -> Result {
 fn cherry_pick_sequence() -> Result {
     let repo = named_repo("make_cherry_pick_sequence_repo.sh")?;
 
-    assert_eq!(repo.head_name()?.unwrap().shorten(), "main");
+    assert_eq!(repo.head_name()?.unwrap().shorten(), "master");
     assert_eq!(repo.state(), Some(gix::state::InProgress::CherryPickSequence));
 
     Ok(())
@@ -42,7 +42,7 @@ fn cherry_pick_sequence() -> Result {
 fn merge() -> Result {
     let repo = named_repo("make_merge_repo.sh")?;
 
-    assert_eq!(repo.head_name()?.unwrap().shorten(), "main");
+    assert_eq!(repo.head_name()?.unwrap().shorten(), "master");
     assert_eq!(repo.state(), Some(gix::state::InProgress::Merge));
 
     Ok(())
@@ -62,7 +62,7 @@ fn rebase_interactive() -> Result {
 fn revert() -> Result {
     let repo = named_repo("make_revert_repo.sh")?;
 
-    assert_eq!(repo.head_name()?.unwrap().shorten(), "main");
+    assert_eq!(repo.head_name()?.unwrap().shorten(), "master");
     assert_eq!(repo.state(), Some(gix::state::InProgress::Revert));
 
     Ok(())
@@ -72,7 +72,7 @@ fn revert() -> Result {
 fn revert_sequence() -> Result {
     let repo = named_repo("make_revert_sequence_repo.sh")?;
 
-    assert_eq!(repo.head_name()?.unwrap().shorten(), "main");
+    assert_eq!(repo.head_name()?.unwrap().shorten(), "master");
     assert_eq!(repo.state(), Some(gix::state::InProgress::RevertSequence));
 
     Ok(())

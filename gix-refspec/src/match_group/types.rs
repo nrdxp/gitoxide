@@ -26,7 +26,7 @@ pub struct Outcome<'spec, 'item> {
 /// An item to match, input to various matching operations.
 #[derive(Debug, Copy, Clone)]
 pub struct Item<'a> {
-    /// The full name of the references, like `refs/heads/main`
+    /// The full name of the references, like `refs/heads/master`
     pub full_ref_name: &'a BStr,
     /// The id that `full_ref_name` points to, which typically is a commit, but can also be a tag object (or anything else).
     pub target: &'a oid,

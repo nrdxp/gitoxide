@@ -113,8 +113,8 @@ fn partial_name_to_full_name_conversion_rules_are_applied() -> crate::Result {
         "it finds heads when disambiguated"
     );
     assert_eq!(
-        packed.try_find("main")?.expect("present").name.as_bstr(),
-        "refs/heads/main",
+        packed.try_find("master")?.expect("present").name.as_bstr(),
+        "refs/heads/master",
         "it finds local heads before remote ones"
     );
     assert_eq!(

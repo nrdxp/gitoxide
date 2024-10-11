@@ -3,9 +3,9 @@ mod single {
 
     #[test]
     fn fetch_only() {
-        baseline::agrees_with_fetch_specs(Some("refs/heads/main"));
-        baseline::agrees_with_fetch_specs(Some("heads/main"));
-        baseline::agrees_with_fetch_specs(Some("main"));
+        baseline::agrees_with_fetch_specs(Some("refs/heads/master"));
+        baseline::agrees_with_fetch_specs(Some("heads/master"));
+        baseline::agrees_with_fetch_specs(Some("master"));
         baseline::agrees_with_fetch_specs(Some("v0.0-f1"));
         baseline::agrees_with_fetch_specs(Some("tags/v0.0-f2"));
         baseline::of_objects_always_matches_if_the_server_has_the_object(Some(
@@ -57,11 +57,11 @@ mod multiple {
 
     #[test]
     fn fetch_only() {
-        baseline::agrees_with_fetch_specs(["main", "f1"]);
-        baseline::agrees_with_fetch_specs(["heads/main", "heads/f1"]);
-        baseline::agrees_with_fetch_specs(["refs/heads/main", "refs/heads/f1"]);
-        baseline::agrees_with_fetch_specs(["heads/f1", "f2", "refs/heads/f3", "heads/main"]);
-        baseline::agrees_with_fetch_specs(["f*:a*", "refs/heads/main"]);
+        baseline::agrees_with_fetch_specs(["master", "f1"]);
+        baseline::agrees_with_fetch_specs(["heads/master", "heads/f1"]);
+        baseline::agrees_with_fetch_specs(["refs/heads/master", "refs/heads/f1"]);
+        baseline::agrees_with_fetch_specs(["heads/f1", "f2", "refs/heads/f3", "heads/master"]);
+        baseline::agrees_with_fetch_specs(["f*:a*", "refs/heads/master"]);
         baseline::agrees_with_fetch_specs([
             "refs/tags/*:refs/remotes/origin/*",
             "refs/heads/*:refs/remotes/origin/*",
@@ -89,8 +89,8 @@ mod multiple {
             ["^main", "refs/heads/*:refs/remotes/origin/*"],
             Error::NegativePartialName,
         );
-        baseline::agrees_with_fetch_specs(["^refs/heads/main", "refs/heads/*:refs/remotes/origin/*"]);
-        baseline::agrees_with_fetch_specs(["refs/heads/*:refs/remotes/origin/*", "^refs/heads/main"]);
+        baseline::agrees_with_fetch_specs(["^refs/heads/master", "refs/heads/*:refs/remotes/origin/*"]);
+        baseline::agrees_with_fetch_specs(["refs/heads/*:refs/remotes/origin/*", "^refs/heads/master"]);
     }
 
     #[test]
@@ -116,11 +116,11 @@ mod multiple {
     fn fetch_and_update_multiple_destinations() {
         baseline::agrees_with_fetch_specs([
             "refs/heads/*:refs/remotes/origin/*",
-            "refs/heads/main:refs/remotes/new-origin/main",
+            "refs/heads/master:refs/remotes/new-origin/main",
         ]);
         baseline::agrees_with_fetch_specs([
             "refs/heads/*:refs/remotes/origin/*",
-            "refs/heads/main:refs/remotes/origin/main", // duplicates are removed immediately.
+            "refs/heads/master:refs/remotes/origin/main", // duplicates are removed immediately.
         ]);
     }
 

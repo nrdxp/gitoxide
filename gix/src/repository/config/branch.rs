@@ -91,12 +91,12 @@ impl crate::Repository {
     ///
     /// * with `remote` being [remote::Direction::Fetch], we return the tracking branch that is on the destination
     ///   side of a `src:dest` refspec. For instance, with `name` being `main` and the default refspec
-    ///   `refs/heads/*:refs/remotes/origin/*`, `refs/heads/main` would match and produce `refs/remotes/origin/main`.
+    ///   `refs/heads/*:refs/remotes/origin/*`, `refs/heads/master` would match and produce `refs/remotes/origin/main`.
     /// * with `remote` being [remote::Direction::Push], we return the tracking branch that corresponds to the remote
     ///   branch that we would push to. For instance, with `name` being `main` and no setup at all, we
-    ///   would push to `refs/heads/main` on the remote. And that one would be fetched matching the
+    ///   would push to `refs/heads/master` on the remote. And that one would be fetched matching the
     ///   `refs/heads/*:refs/remotes/origin/*` fetch refspec, hence `refs/remotes/origin/main` is returned.
-    ///   Note that `push` refspecs can be used to map `main` to `other` (using a push refspec `refs/heads/main:refs/heads/other`),
+    ///   Note that `push` refspecs can be used to map `main` to `other` (using a push refspec `refs/heads/master:refs/heads/other`),
     ///   which would then lead to `refs/remotes/origin/other` to be returned instead.
     ///
     /// Note that if there is an ambiguity, that is if `name` maps to multiple tracking branches, the first matching mapping
@@ -126,7 +126,7 @@ impl crate::Repository {
     }
 
     /// Returns the unvalidated name of the remote associated with the given `short_branch_name`,
-    /// typically `main` instead of `refs/heads/main`.
+    /// typically `main` instead of `refs/heads/master`.
     /// In some cases, the returned name will be an URL.
     /// Returns `None` if the remote was not found or if the name contained illformed UTF-8.
     ///

@@ -65,7 +65,7 @@ fn refname_with_head_prefix() {
 
 #[test]
 fn full_head_ref_name() {
-    let rec = parse("refs/heads/main");
+    let rec = parse("refs/heads/master");
     assert!(rec.kind.is_none());
-    assert_eq!(rec.get_ref(0), "refs/heads/main");
+    assert_eq!(rec.get_ref(0), "refs/heads/master");
 }

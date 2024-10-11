@@ -59,10 +59,10 @@ mod fetch {
     fn only() {
         assert_eq!(
             Instruction::Fetch(instruction::Fetch::Only {
-                src: "refs/heads/main".into(),
+                src: "refs/heads/master".into(),
             })
             .to_bstring(),
-            "refs/heads/main"
+            "refs/heads/master"
         );
     }
 

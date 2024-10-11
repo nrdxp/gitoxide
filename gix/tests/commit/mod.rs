@@ -41,7 +41,7 @@ mod describe {
                 .expect("resolution")
                 .format_with_dirty_suffix("dirty".to_owned())?
                 .to_string();
-            assert_eq!(actual, "main");
+            assert_eq!(actual, "master");
             Ok(())
         }
     }

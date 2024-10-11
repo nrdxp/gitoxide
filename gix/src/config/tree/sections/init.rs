@@ -5,8 +5,7 @@ use crate::{
 
 impl Init {
     /// The `init.defaultBranch` key.
-    pub const DEFAULT_BRANCH: keys::Any = keys::Any::new("defaultBranch", &config::Tree::INIT)
-        .with_deviation("If not set, we use `main` instead of `master`");
+    pub const DEFAULT_BRANCH: keys::Any = keys::Any::new("defaultBranch", &config::Tree::INIT);
 }
 
 impl Section for Init {

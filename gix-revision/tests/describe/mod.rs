@@ -119,7 +119,7 @@ fn not_enough_candidates() -> crate::Result {
 
 #[test]
 fn typical_usecases() -> crate::Result {
-    let name = Cow::Borrowed(b"main".as_bstr());
+    let name = Cow::Borrowed(b"master".as_bstr());
     run_test(
         std::convert::identity,
         |id| describe::Options {

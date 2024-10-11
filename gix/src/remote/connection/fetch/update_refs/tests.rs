@@ -67,61 +67,61 @@ mod update {
         let repo = repo("two-origins");
         for (spec, expected_mode, reflog_message, detail) in [
             (
-                "refs/heads/main:refs/remotes/origin/main",
+                "refs/heads/master:refs/remotes/origin/main",
                 fetch::refs::update::Mode::NoChangeNeeded,
                 Some("no update will be performed"),
                 "these refs are en-par since the initial clone",
             ),
             (
-                "refs/heads/main",
+                "refs/heads/master",
                 fetch::refs::update::Mode::NoChangeNeeded,
                 None,
                 "without local destination ref there is nothing to do for us, ever (except for FETCH_HEADs) later",
             ),
             (
-                "refs/heads/main:refs/remotes/origin/new-main",
+                "refs/heads/master:refs/remotes/origin/new-main",
                 fetch::refs::update::Mode::New,
                 Some("storing ref"),
                 "the destination branch doesn't exist and needs to be created",
             ),
             (
-                "refs/heads/main:refs/heads/feature",
+                "refs/heads/master:refs/heads/feature",
                 fetch::refs::update::Mode::New,
                 Some("storing head"),
                 "reflog messages are specific to the type of branch stored, to some limited extend",
             ),
             (
-                "refs/heads/main:refs/tags/new-tag",
+                "refs/heads/master:refs/tags/new-tag",
                 fetch::refs::update::Mode::New,
                 Some("storing tag"),
                 "reflog messages are specific to the type of branch stored, to some limited extend",
             ),
             (
-                "+refs/heads/main:refs/remotes/origin/new-main",
+                "+refs/heads/master:refs/remotes/origin/new-main",
                 fetch::refs::update::Mode::New,
                 Some("storing ref"),
                 "just to validate that we really are in dry-run mode, or else this ref would be present now",
             ),
             (
-                "+refs/heads/main:refs/remotes/origin/g",
+                "+refs/heads/master:refs/remotes/origin/g",
                 fetch::refs::update::Mode::FastForward,
                 Some("fast-forward (guessed in dry-run)"),
                 "a forced non-fastforward (main goes backwards), but dry-run calls it fast-forward",
             ),
             (
-                "+refs/heads/main:refs/tags/b-tag",
+                "+refs/heads/master:refs/tags/b-tag",
                 fetch::refs::update::Mode::Forced,
                 Some("updating tag"),
                 "tags can only be forced",
             ),
             (
-                "refs/heads/main:refs/tags/b-tag",
+                "refs/heads/master:refs/tags/b-tag",
                 fetch::refs::update::Mode::RejectedTagUpdate,
                 None,
                 "otherwise a tag is always refusing itself to be overwritten (no-clobber)",
             ),
             (
-                "+refs/remotes/origin/g:refs/heads/main",
+                "+refs/remotes/origin/g:refs/heads/master",
                 fetch::refs::update::Mode::RejectedCurrentlyCheckedOut {
                     worktree_dirs: vec![repo.work_dir().expect("present").to_owned()],
                 },
@@ -199,14 +199,14 @@ mod update {
         let repo = root.join("worktree-root");
         let repo = gix::open_opts(repo, restricted())?;
         for (branch, path_from_root) in [
-            ("main", "worktree-root"),
+            ("master", "worktree-root"),
             ("wt-a-nested", "prev/wt-a-nested"),
             ("wt-a", "wt-a"),
             ("nested-wt-b", "wt-a/nested-wt-b"),
             ("wt-c-locked", "wt-c-locked"),
             ("wt-deleted", "wt-deleted"),
         ] {
-            let spec = format!("refs/heads/main:refs/heads/{branch}");
+            let spec = format!("refs/heads/master:refs/heads/{branch}");
             let (mappings, specs) = mapping_from_spec(&spec, &repo);
             let out = fetch::refs::update(
                 &repo,
@@ -296,9 +296,9 @@ mod update {
                         message: "action: change unborn ref".into(),
                     },
                     expected: PreviousValue::MustExistAndMatch(Target::Symbolic(
-                        "refs/heads/main".try_into().expect("valid"),
+                        "refs/heads/master".try_into().expect("valid"),
                     )),
-                    new: Target::Symbolic("refs/heads/main".try_into().expect("valid")),
+                    new: Target::Symbolic("refs/heads/master".try_into().expect("valid")),
                 },
                 name: "refs/heads/existing-unborn-symbolic".try_into().expect("valid"),
                 deref: false,
@@ -342,7 +342,7 @@ mod update {
                     expected: PreviousValue::MustExistAndMatch(Target::Symbolic(
                         "refs/heads/other".try_into().expect("valid"),
                     )),
-                    new: Target::Symbolic("refs/heads/main".try_into().expect("valid")),
+                    new: Target::Symbolic("refs/heads/master".try_into().expect("valid")),
                 },
                 name: "refs/heads/existing-unborn-symbolic-other".try_into().expect("valid"),
                 deref: false,
@@ -481,9 +481,9 @@ mod update {
                             message: "action: storing head".into(),
                         },
                         expected: PreviousValue::ExistingMustMatch(Target::Symbolic(
-                            "refs/heads/main".try_into().expect("valid"),
+                            "refs/heads/master".try_into().expect("valid"),
                         )),
-                        new: Target::Symbolic("refs/heads/main".try_into().expect("valid")),
+                        new: Target::Symbolic("refs/heads/master".try_into().expect("valid")),
                     },
                     name: "refs/heads/HEAD".try_into().expect("valid"),
                     deref: false,
@@ -492,7 +492,7 @@ mod update {
             (
                 // attempt to overwrite checked out branch fails
                 "refs/remotes/origin/b", // strange, but the remote-refs are simulated and based on local refs
-                "refs/heads/main",
+                "refs/heads/master",
                 fetch::refs::Update {
                     mode: fetch::refs::update::Mode::RejectedCurrentlyCheckedOut {
                         worktree_dirs: vec![repo.work_dir().expect("present").to_owned()],
@@ -504,7 +504,7 @@ mod update {
             ),
             (
                 // symbolic becomes direct
-                "refs/heads/main",
+                "refs/heads/master",
                 "refs/heads/symbolic",
                 fetch::refs::Update {
                     mode: fetch::refs::update::Mode::NoChangeNeeded,
@@ -519,7 +519,7 @@ mod update {
                             message: "action: no update will be performed".into(),
                         },
                         expected: PreviousValue::MustExistAndMatch(Target::Symbolic(
-                            "refs/heads/main".try_into().expect("valid"),
+                            "refs/heads/master".try_into().expect("valid"),
                         )),
                         new: Target::Object(hex_to_id("f99771fe6a1b535783af3163eba95a927aae21d5")),
                     },
@@ -546,7 +546,7 @@ mod update {
                         expected: PreviousValue::MustExistAndMatch(Target::Object(hex_to_id(
                             "f99771fe6a1b535783af3163eba95a927aae21d5",
                         ))),
-                        new: Target::Symbolic("refs/heads/main".try_into().expect("valid")),
+                        new: Target::Symbolic("refs/heads/master".try_into().expect("valid")),
                     },
                     name: "refs/remotes/origin/a".try_into().expect("valid"),
                     deref: false,
@@ -569,9 +569,9 @@ mod update {
                             message: "action: no update will be performed".into(),
                         },
                         expected: PreviousValue::MustExistAndMatch(Target::Symbolic(
-                            "refs/heads/main".try_into().expect("valid"),
+                            "refs/heads/master".try_into().expect("valid"),
                         )),
-                        new: Target::Symbolic("refs/heads/main".try_into().expect("valid")),
+                        new: Target::Symbolic("refs/heads/master".try_into().expect("valid")),
                     },
                     name: "refs/heads/symbolic".try_into().expect("valid"),
                     deref: false,
@@ -606,7 +606,7 @@ mod update {
         let (mut mappings, specs) = mapping_from_spec("refs/heads/symbolic:refs/remotes/origin/new", &repo);
         mappings.push(Mapping {
             remote: Source::Ref(gix_protocol::handshake::Ref::Direct {
-                full_ref_name: "refs/heads/main".into(),
+                full_ref_name: "refs/heads/master".into(),
                 object: hex_to_id("f99771fe6a1b535783af3163eba95a927aae21d5"),
             }),
             local: Some("refs/heads/symbolic".into()),
@@ -683,7 +683,7 @@ mod update {
     #[test]
     fn remote_refs_cannot_map_to_local_head() {
         let repo = repo("two-origins");
-        let (mappings, specs) = mapping_from_spec("refs/heads/main:HEAD", &repo);
+        let (mappings, specs) = mapping_from_spec("refs/heads/master:HEAD", &repo);
         let out = fetch::refs::update(
             &repo,
             prefixed("action"),
@@ -729,7 +729,7 @@ mod update {
         let (mut mappings, specs) = mapping_from_spec("HEAD:refs/remotes/origin/new-HEAD", &repo);
         mappings.push(Mapping {
             remote: Source::Ref(gix_protocol::handshake::Ref::Direct {
-                full_ref_name: "refs/heads/main".into(),
+                full_ref_name: "refs/heads/master".into(),
                 object: hex_to_id("f99771fe6a1b535783af3163eba95a927aae21d5"),
             }),
             local: Some("refs/remotes/origin/main".into()),
@@ -781,7 +781,7 @@ mod update {
     #[test]
     fn non_fast_forward_is_rejected_but_appears_to_be_fast_forward_in_dryrun_mode() {
         let repo = repo("two-origins");
-        let (mappings, specs) = mapping_from_spec("refs/heads/main:refs/remotes/origin/g", &repo);
+        let (mappings, specs) = mapping_from_spec("refs/heads/master:refs/remotes/origin/g", &repo);
         let reflog_message: BString = "very special".into();
         let out = fetch::refs::update(
             &repo,
@@ -842,7 +842,7 @@ mod update {
         );
         assert_eq!(out.edits.len(), 0);
 
-        let (mappings, specs) = mapping_from_spec("refs/heads/main:refs/remotes/origin/g", &repo);
+        let (mappings, specs) = mapping_from_spec("refs/heads/master:refs/remotes/origin/g", &repo);
         let out = fetch::refs::update(
             &repo,
             prefixed("prefix"),
@@ -876,7 +876,7 @@ mod update {
     #[test]
     fn fast_forwards_are_called_out_even_if_force_is_given() {
         let (repo, _tmp) = repo_rw("two-origins");
-        let (mappings, specs) = mapping_from_spec("+refs/heads/main:refs/remotes/origin/g", &repo);
+        let (mappings, specs) = mapping_from_spec("+refs/heads/master:refs/remotes/origin/g", &repo);
         let out = fetch::refs::update(
             &repo,
             prefixed("prefix"),

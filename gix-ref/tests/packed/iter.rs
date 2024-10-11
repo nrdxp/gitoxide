@@ -33,7 +33,7 @@ fn iter_prefix() -> crate::Result {
         vec![
             "refs/heads/d1".as_bytes().as_bstr(),
             "refs/heads/dt1".into(),
-            "refs/heads/main".into()
+            "refs/heads/master".into()
         ]
     );
 

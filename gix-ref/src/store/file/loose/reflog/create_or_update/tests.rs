@@ -38,7 +38,7 @@ const WRITE_MODES: &[WriteReflog] = &[WriteReflog::Normal, WriteReflog::Disable,
 #[test]
 fn should_autocreate_is_unaffected_by_writemode() -> Result {
     let (_keep, store) = empty_store(WriteReflog::Disable)?;
-    for should_create_name in &["HEAD", "refs/heads/main", "refs/remotes/any", "refs/notes/any"] {
+    for should_create_name in &["HEAD", "refs/heads/master", "refs/remotes/any", "refs/notes/any"] {
         assert!(store.should_autocreate_reflog(Path::new(should_create_name)));
     }
     for should_not_create_name in &["FETCH_HEAD", "SOMETHING", "refs/special/this", "refs/tags/0.1.0"] {
@@ -51,7 +51,7 @@ fn should_autocreate_is_unaffected_by_writemode() -> Result {
 fn missing_reflog_creates_it_even_if_similarly_named_empty_dir_exists_and_append_log_lines() -> Result {
     for mode in WRITE_MODES {
         let (_keep, store) = empty_store(*mode)?;
-        let full_name_str = "refs/heads/main";
+        let full_name_str = "refs/heads/master";
         let full_name: &FullNameRef = full_name_str.try_into()?;
         let new = hex_to_id("28ce6a8b26aa170e1de65536fe8abe1832bd3242");
         let committer = Signature {

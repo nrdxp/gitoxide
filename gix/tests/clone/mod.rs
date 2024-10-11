@@ -35,7 +35,7 @@ mod blocking_io {
                     let mut r = r.with_fetch_tags(desired_fetch_tags);
                     r.replace_refspecs(
                         [
-                            BString::from(format!("refs/heads/main:refs/remotes/{remote_name}/main")),
+                            BString::from(format!("refs/heads/master:refs/remotes/{remote_name}/main")),
                             "+refs/tags/b-tag:refs/tags/b-tag".to_owned().into(),
                         ],
                         Direction::Fetch,
@@ -141,7 +141,7 @@ mod blocking_io {
         let (repo, _change) = gix::prepare_clone_bare(remote::repo("base").path(), tmp.path())?
             .with_shallow(Shallow::DepthAtRemote(2.try_into()?))
             .configure_remote(|mut r| {
-                r.replace_refspecs(Some("refs/heads/main:refs/remotes/origin/main"), Direction::Fetch)?;
+                r.replace_refspecs(Some("refs/heads/master:refs/remotes/origin/main"), Direction::Fetch)?;
                 Ok(r)
             })
             .fetch_only(gix::progress::Discard, &std::sync::atomic::AtomicBool::default())?;
@@ -457,7 +457,7 @@ mod blocking_io {
             repo.branch_remote_ref_name(ref_name, gix::remote::Direction::Fetch)
                 .expect("present")?
                 .as_bstr(),
-            "refs/heads/main"
+            "refs/heads/master"
         );
 
         {
@@ -686,7 +686,7 @@ mod blocking_io {
             } else {
                 assert_eq!(
                     head.referent_name().expect("present").as_bstr(),
-                    "refs/heads/main",
+                    "refs/heads/master",
                     "we simply keep our own post-init HEAD which defaults to the branch name we configured locally"
                 );
             }

@@ -615,7 +615,7 @@ fn configure_command<'a>(
         .env("GIT_CONFIG_KEY_1", "tag.gpgsign")
         .env("GIT_CONFIG_VALUE_1", "false")
         .env("GIT_CONFIG_KEY_2", "init.defaultBranch")
-        .env("GIT_CONFIG_VALUE_2", "main")
+        .env("GIT_CONFIG_VALUE_2", "master")
         .env("GIT_CONFIG_KEY_3", "protocol.file.allow")
         .env("GIT_CONFIG_VALUE_3", "always")
 }

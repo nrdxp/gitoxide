@@ -10,14 +10,14 @@ fn cow() {
 
 #[test]
 fn file_name() {
-    let name: gix_ref::FullName = "refs/heads/main".try_into().unwrap();
-    assert_eq!(name.as_ref().file_name(), "main");
+    let name: gix_ref::FullName = "refs/heads/master".try_into().unwrap();
+    assert_eq!(name.as_ref().file_name(), "master");
 }
 #[test]
 fn shorten_and_category() {
     for (input, expected, category, is_worktree_private) in [
         ("refs/tags/tag-name", "tag-name", Category::Tag, false),
-        ("refs/heads/main", "main", Category::LocalBranch, false),
+        ("refs/heads/master", "master", Category::LocalBranch, false),
         ("refs/remotes/origin/main", "origin/main", Category::RemoteBranch, false),
         ("refs/notes/note-name", "notes/note-name", Category::Note, false),
         ("HEAD", "HEAD", Category::PseudoRef, true),
@@ -25,8 +25,8 @@ fn shorten_and_category() {
         ("main-worktree/HEAD", "HEAD", Category::MainPseudoRef, true),
         ("main-worktree/FETCH_HEAD", "FETCH_HEAD", Category::MainPseudoRef, true),
         (
-            "main-worktree/refs/heads/main",
-            "refs/heads/main",
+            "main-worktree/refs/heads/master",
+            "refs/heads/master",
             Category::MainRef,
             false,
         ),
@@ -49,8 +49,8 @@ fn shorten_and_category() {
             true,
         ),
         (
-            "worktrees/name/refs/heads/main",
-            "refs/heads/main",
+            "worktrees/name/refs/heads/master",
+            "refs/heads/master",
             Category::LinkedRef { name: "name".into() },
             false,
         ),
@@ -61,8 +61,8 @@ fn shorten_and_category() {
             false,
         ),
         (
-            "worktrees/name/refs/heads/main",
-            "refs/heads/main",
+            "worktrees/name/refs/heads/master",
+            "refs/heads/master",
             Category::LinkedRef { name: "name".into() },
             false,
         ),
@@ -102,20 +102,20 @@ fn shorten_and_category() {
 #[test]
 fn prefix_with_namespace_and_stripping() {
     let ns = gix_ref::namespace::expand("foo").unwrap();
-    let mut name: gix_ref::FullName = "refs/heads/main".try_into().unwrap();
+    let mut name: gix_ref::FullName = "refs/heads/master".try_into().unwrap();
     assert_eq!(
         name.prefix_namespace(&ns).as_bstr(),
-        "refs/namespaces/foo/refs/heads/main"
+        "refs/namespaces/foo/refs/heads/master"
     );
     assert_eq!(
         name.prefix_namespace(&ns).as_bstr(),
-        "refs/namespaces/foo/refs/heads/main",
+        "refs/namespaces/foo/refs/heads/master",
         "idempotent prefixing"
     );
-    assert_eq!(name.strip_namespace(&ns).as_bstr(), "refs/heads/main");
+    assert_eq!(name.strip_namespace(&ns).as_bstr(), "refs/heads/master");
     assert_eq!(
         name.strip_namespace(&ns).as_bstr(),
-        "refs/heads/main",
+        "refs/heads/master",
         "idempotent stripping"
     );
 }

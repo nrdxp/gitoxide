@@ -14,7 +14,7 @@ fn nth_prior_checkout() {
 
     for (spec, prior_branch) in [
         ("@{-1}", "refs/heads/i"),
-        ("@{-2}", "refs/heads/main"),
+        ("@{-2}", "refs/heads/master"),
         ("@{-3}", "refs/heads/e"),
         ("@{-4}", "refs/heads/j"),
         ("@{-5}", "refs/heads/h"),
@@ -51,7 +51,7 @@ fn by_index() {
         );
         assert_eq!(
             spec.first_reference().expect("set").name.as_bstr(),
-            "refs/heads/main",
+            "refs/heads/master",
             "it sets the reference name even if it is implied"
         );
         assert_eq!(spec.second_reference(), None);
@@ -73,7 +73,7 @@ fn by_index() {
 
     assert_eq!(
         parse_spec("main@{12345}", repo).unwrap_err().to_string(),
-        "Reference \"refs/heads/main\" has 4 ref-log entries and entry number 12345 is out of range"
+        "Reference \"refs/heads/master\" has 4 ref-log entries and entry number 12345 is out of range"
     );
 }
 

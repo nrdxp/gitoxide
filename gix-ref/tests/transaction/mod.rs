@@ -43,7 +43,7 @@ mod refedit_ext {
 
     #[test]
     fn preprocessing_checks_duplicates_after_splits() -> crate::Result {
-        let store = MockStore::with(Some(("HEAD", Target::Symbolic("refs/heads/main".try_into()?))));
+        let store = MockStore::with(Some(("HEAD", Target::Symbolic("refs/heads/master".try_into()?))));
 
         let mut edits = vec![
             RefEdit {
@@ -59,7 +59,7 @@ mod refedit_ext {
                     expected: PreviousValue::Any,
                     log: RefLog::AndReference,
                 },
-                name: "refs/heads/main".try_into()?,
+                name: "refs/heads/master".try_into()?,
                 deref: false,
             },
         ];
@@ -69,7 +69,7 @@ mod refedit_ext {
             .expect_err("duplicate detected");
         assert_eq!(
             err.to_string(),
-            "A reference named 'refs/heads/main' has multiple edits"
+            "A reference named 'refs/heads/master' has multiple edits"
         );
         Ok(())
     }
@@ -87,7 +87,7 @@ mod refedit_ext {
             "there are no duplicates"
         );
         assert_eq!(
-            vec![named_edit("HEAD"), named_edit("refs/heads/main"), named_edit("HEAD")]
+            vec![named_edit("HEAD"), named_edit("refs/heads/master"), named_edit("HEAD")]
                 .assure_one_name_has_one_edit()
                 .expect_err("duplicate"),
             "HEAD",

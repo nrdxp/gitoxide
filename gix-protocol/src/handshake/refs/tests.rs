@@ -10,11 +10,11 @@ use crate::handshake::{refs, refs::shared::InternalRef, Ref};
 #[maybe_async::test(feature = "blocking-client", async(feature = "async-client", async_std::test))]
 async fn extract_references_from_v2_refs() {
     let input = &mut Fixture(
-        "808e50d724f604f69ab93c6da2919c014667bedb HEAD symref-target:refs/heads/main
+        "808e50d724f604f69ab93c6da2919c014667bedb HEAD symref-target:refs/heads/master
 808e50d724f604f69ab93c6da2919c014667bedb MISSING_NAMESPACE_TARGET symref-target:(null)
-unborn HEAD symref-target:refs/heads/main
+unborn HEAD symref-target:refs/heads/master
 unborn refs/heads/symbolic symref-target:refs/heads/target
-808e50d724f604f69ab93c6da2919c014667bedb refs/heads/main
+808e50d724f604f69ab93c6da2919c014667bedb refs/heads/master
 7fe1b98b39423b71e14217aa299a03b7c937d656 refs/tags/foo peeled:808e50d724f604f69ab93c6da2919c014667bedb
 7fe1b98b39423b71e14217aa299a03b7c937d6ff refs/tags/blaz
 978f927e6397113757dfec6332e7d9c7e356ac25 refs/heads/symbolic symref-target:refs/tags/v1.0 peeled:4d979abcde5cea47b079c38850828956c9382a56
@@ -29,7 +29,7 @@ unborn refs/heads/symbolic symref-target:refs/heads/target
         vec![
             Ref::Symbolic {
                 full_ref_name: "HEAD".into(),
-                target: "refs/heads/main".into(),
+                target: "refs/heads/master".into(),
                 tag: None,
                 object: oid("808e50d724f604f69ab93c6da2919c014667bedb")
             },
@@ -39,14 +39,14 @@ unborn refs/heads/symbolic symref-target:refs/heads/target
             },
             Ref::Unborn {
                 full_ref_name: "HEAD".into(),
-                target: "refs/heads/main".into(),
+                target: "refs/heads/master".into(),
             },
             Ref::Unborn {
                 full_ref_name: "refs/heads/symbolic".into(),
                 target: "refs/heads/target".into(),
             },
             Ref::Direct {
-                full_ref_name: "refs/heads/main".into(),
+                full_ref_name: "refs/heads/master".into(),
                 object: oid("808e50d724f604f69ab93c6da2919c014667bedb")
             },
             Ref::Peeled {
@@ -73,7 +73,7 @@ async fn extract_references_from_v1_refs() {
     let input = &mut Fixture(
         "73a6868963993a3328e7d8fe94e5a6ac5078a944 HEAD
 21c9b7500cb144b3169a6537961ec2b9e865be81 MISSING_NAMESPACE_TARGET
-73a6868963993a3328e7d8fe94e5a6ac5078a944 refs/heads/main
+73a6868963993a3328e7d8fe94e5a6ac5078a944 refs/heads/master
 8e472f9ccc7d745927426cbb2d9d077de545aa4e refs/pull/13/head
 dce0ea858eef7ff61ad345cc5cdac62203fb3c10 refs/tags/gix-commitgraph-v0.0.0
 21c9b7500cb144b3169a6537961ec2b9e865be81 refs/tags/gix-commitgraph-v0.0.0^{}"
@@ -81,7 +81,7 @@ dce0ea858eef7ff61ad345cc5cdac62203fb3c10 refs/tags/gix-commitgraph-v0.0.0
     );
     let out = refs::from_v1_refs_received_as_part_of_handshake_and_capabilities(
         input,
-        Capabilities::from_bytes(b"\0symref=HEAD:refs/heads/main symref=MISSING_NAMESPACE_TARGET:(null)")
+        Capabilities::from_bytes(b"\0symref=HEAD:refs/heads/master symref=MISSING_NAMESPACE_TARGET:(null)")
             .expect("valid capabilities")
             .0
             .iter(),
@@ -93,7 +93,7 @@ dce0ea858eef7ff61ad345cc5cdac62203fb3c10 refs/tags/gix-commitgraph-v0.0.0
         vec![
             Ref::Symbolic {
                 full_ref_name: "HEAD".into(),
-                target: "refs/heads/main".into(),
+                target: "refs/heads/master".into(),
                 tag: None,
                 object: oid("73a6868963993a3328e7d8fe94e5a6ac5078a944")
             },
@@ -102,7 +102,7 @@ dce0ea858eef7ff61ad345cc5cdac62203fb3c10 refs/tags/gix-commitgraph-v0.0.0
                 object: oid("21c9b7500cb144b3169a6537961ec2b9e865be81")
             },
             Ref::Direct {
-                full_ref_name: "refs/heads/main".into(),
+                full_ref_name: "refs/heads/master".into(),
                 object: oid("73a6868963993a3328e7d8fe94e5a6ac5078a944")
             },
             Ref::Direct {
@@ -121,7 +121,7 @@ dce0ea858eef7ff61ad345cc5cdac62203fb3c10 refs/tags/gix-commitgraph-v0.0.0
 #[test]
 fn extract_symbolic_references_from_capabilities() -> Result<(), client::Error> {
     let caps = client::Capabilities::from_bytes(
-        b"\0unrelated symref=HEAD:refs/heads/main symref=ANOTHER:refs/heads/foo symref=MISSING_NAMESPACE_TARGET:(null) agent=git/2.28.0",
+        b"\0unrelated symref=HEAD:refs/heads/master symref=ANOTHER:refs/heads/foo symref=MISSING_NAMESPACE_TARGET:(null) agent=git/2.28.0",
     )?
         .0;
     let out = refs::shared::from_capabilities(caps.iter()).expect("a working example");
@@ -131,7 +131,7 @@ fn extract_symbolic_references_from_capabilities() -> Result<(), client::Error> 
         vec![
             InternalRef::SymbolicForLookup {
                 path: "HEAD".into(),
-                target: Some("refs/heads/main".into())
+                target: Some("refs/heads/master".into())
             },
             InternalRef::SymbolicForLookup {
                 path: "ANOTHER".into(),

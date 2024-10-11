@@ -142,14 +142,14 @@ mod read_only {
             );
             assert_reflog(&store, store.find("HEAD")?, store.find("main-worktree/HEAD")?);
             assert_eq!(
-                peel(store.find("main").unwrap()),
-                peel(store.find("main-worktree/refs/heads/main").unwrap()),
+                peel(store.find("master").unwrap()),
+                peel(store.find("main-worktree/refs/heads/master").unwrap()),
                 "main-worktree prefix in pseudorefs from main worktree just works"
             );
             assert_reflog(
                 &store,
-                store.find("main")?,
-                store.find("main-worktree/refs/heads/main")?,
+                store.find("master")?,
+                store.find("main-worktree/refs/heads/master")?,
             );
             assert_eq!(
                 peel(store.find("refs/bisect/bad").unwrap()),
@@ -272,7 +272,7 @@ mod writable {
                 [
                     ("refs/bisect/bad", "9556057aee5abb06912922e9f26c46386a816822"),
                     ("refs/bisect/good", new_id_main_str),
-                    ("refs/heads/main", "9556057aee5abb06912922e9f26c46386a816822"),
+                    ("refs/heads/master", "9556057aee5abb06912922e9f26c46386a816822"),
                     ("refs/heads/new", new_id_main_str),
                     ("refs/heads/shared", new_id_linked_str),
                     ("refs/heads/w1", "9902e3c3e8f0c569b4ab295ddf473e6de763e1e7"),
@@ -552,7 +552,7 @@ mod writable {
                 [
                     ("refs/bisect/bad", "9902e3c3e8f0c569b4ab295ddf473e6de763e1e7"),
                     ("refs/bisect/good", new_id_str),
-                    ("refs/heads/main", "9556057aee5abb06912922e9f26c46386a816822"),
+                    ("refs/heads/master", "9556057aee5abb06912922e9f26c46386a816822"),
                     ("refs/heads/new", new_id_main_str),
                     ("refs/heads/shared", new_id_str),
                     ("refs/heads/w1", "9902e3c3e8f0c569b4ab295ddf473e6de763e1e7"),

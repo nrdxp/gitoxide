@@ -101,7 +101,7 @@ mod iter_references {
                 "refs/d1",
                 "refs/heads/d1",
                 "refs/heads/dt1",
-                "refs/heads/main",
+                "refs/heads/master",
                 "refs/heads/multi-link-target1",
                 "refs/loop-a",
                 "refs/loop-b",
@@ -141,7 +141,7 @@ mod iter_references {
                     hex_to_id("134385f6d781b7e97062102c6a483440bfda2a03").into()
                 ),
                 (
-                    "refs/heads/main".into(),
+                    "refs/heads/master".into(),
                     hex_to_id("134385f6d781b7e97062102c6a483440bfda2a03").into()
                 ),
                 ("refs/heads/multi-link-target1".into(), None),
@@ -173,7 +173,7 @@ mod iter_references {
                     hex_to_id("134385f6d781b7e97062102c6a483440bfda2a03").into()
                 ),
                 (
-                    "refs/heads/main".into(),
+                    "refs/heads/master".into(),
                     hex_to_id("134385f6d781b7e97062102c6a483440bfda2a03").into()
                 ),
                 (
@@ -205,7 +205,7 @@ mod head {
             }
             _ => panic!("unexpected head kind"),
         }
-        assert_eq!(head.referent_name().expect("born").as_bstr(), "refs/heads/main");
+        assert_eq!(head.referent_name().expect("born").as_bstr(), "refs/heads/master");
         assert!(!head.is_detached());
         Ok(())
     }

@@ -28,7 +28,7 @@ fn remote_name() -> crate::Result {
         gix::open::Options::isolated(),
     )?;
     for (ref_name, expected_remote) in [
-        ("main", "origin"),
+        ("master", "origin"),
         ("other-main", "other"),
         ("refs/remotes/origin/main", "origin"),
         ("refs/remotes/other/main", "other"),
@@ -211,7 +211,7 @@ fn set_target_id() {
         .set_target_id(prev_id, "fails")
         .unwrap_err()
         .to_string()
-        .starts_with("Reference \"refs/heads/main\" was supposed to exist"));
+        .starts_with("Reference \"refs/heads/master\" was supposed to exist"));
 }
 
 mod remote;

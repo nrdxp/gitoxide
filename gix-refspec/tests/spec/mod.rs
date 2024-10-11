@@ -8,12 +8,12 @@ mod prefix {
 
     #[test]
     fn partial_refs_have_no_prefix() {
-        assert_eq!(parse("main").to_ref().prefix(), None);
+        assert_eq!(parse("master").to_ref().prefix(), None);
     }
 
     #[test]
     fn negative_specs_have_no_prefix() {
-        assert_eq!(parse("^refs/heads/main").to_ref().prefix(), None);
+        assert_eq!(parse("^refs/heads/master").to_ref().prefix(), None);
     }
 
     #[test]
@@ -34,7 +34,7 @@ mod prefix {
 
     #[test]
     fn full_names_have_a_prefix() {
-        assert_eq!(parse("refs/heads/main").to_ref().prefix().unwrap(), "refs/heads/");
+        assert_eq!(parse("refs/heads/master").to_ref().prefix().unwrap(), "refs/heads/");
         assert_eq!(parse("refs/foo/bar").to_ref().prefix().unwrap(), "refs/foo/");
         assert_eq!(
             parse("refs/heads/*:refs/remotes/origin/*").to_ref().prefix().unwrap(),
@@ -71,12 +71,12 @@ mod expand_prefixes {
     #[test]
     fn partial_refs_have_many_prefixes() {
         assert_eq!(
-            parse("main"),
+            parse("master"),
             [
-                "main",
+                "master",
                 "refs/main",
                 "refs/tags/main",
-                "refs/heads/main",
+                "refs/heads/master",
                 "refs/remotes/main",
                 "refs/remotes/main/HEAD"
             ]
@@ -85,7 +85,7 @@ mod expand_prefixes {
 
     #[test]
     fn negative_specs_have_no_prefix() {
-        assert_eq!(parse("^refs/heads/main").len(), 0);
+        assert_eq!(parse("^refs/heads/master").len(), 0);
     }
 
     #[test]
@@ -95,7 +95,7 @@ mod expand_prefixes {
 
     #[test]
     fn full_names_expand_to_their_prefix() {
-        assert_eq!(parse("refs/heads/main"), ["refs/heads/"]);
+        assert_eq!(parse("refs/heads/master"), ["refs/heads/"]);
         assert_eq!(parse("refs/foo/bar"), ["refs/foo/"]);
         assert_eq!(parse("refs/heads/*:refs/remotes/origin/*"), ["refs/heads/"]);
     }

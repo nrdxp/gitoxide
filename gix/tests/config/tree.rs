@@ -105,8 +105,8 @@ mod branch {
 
     #[test]
     fn merge() {
-        assert!(branch::Merge::try_into_fullrefname(bcow("refs/heads/main")).is_ok());
-        assert!(branch::Merge::try_into_fullrefname(bcow("main")).is_err());
+        assert!(branch::Merge::try_into_fullrefname(bcow("refs/heads/master")).is_ok());
+        assert!(branch::Merge::try_into_fullrefname(bcow("master")).is_err());
 
         assert!(Branch::MERGE.full_name(None).is_err());
         assert_eq!(

@@ -32,7 +32,7 @@ fn remote_and_branch_names() {
         repo.remote_default_name(gix::remote::Direction::Push),
         Some(remote_name("origin"))
     );
-    assert_eq!(Vec::from_iter(repo.branch_names()), vec!["main"]);
+    assert_eq!(Vec::from_iter(repo.branch_names()), vec!["master"]);
 }
 
 #[test]
@@ -67,7 +67,7 @@ mod branch_remote {
                 let repo = repo("push-remote")?;
 
                 assert_eq!(
-                    repo.branch_remote_name("main", remote::Direction::Push)
+                    repo.branch_remote_name("master", remote::Direction::Push)
                         .expect("Remote name exists")
                         .as_ref(),
                     "push-origin",
@@ -78,7 +78,7 @@ mod branch_remote {
             let repo = repo("push-remote-default")?;
 
             assert_eq!(
-                repo.branch_remote_name("main", remote::Direction::Push)
+                repo.branch_remote_name("master", remote::Direction::Push)
                     .expect("Remote name exists")
                     .as_ref(),
                 "push-origin",
@@ -94,14 +94,14 @@ mod branch_remote {
         let repo = repo("fetch")?;
 
         assert_eq!(
-            repo.branch_remote_ref_name("refs/heads/main".try_into()?, remote::Direction::Fetch)
+            repo.branch_remote_ref_name("refs/heads/master".try_into()?, remote::Direction::Fetch)
                 .expect("Remote Merge ref exists")
                 .expect("Remote Merge ref is valid")
                 .shorten(),
-            "main"
+            "master"
         );
         assert_eq!(
-            repo.branch_remote_tracking_ref_name("refs/heads/main".try_into()?, remote::Direction::Fetch)
+            repo.branch_remote_tracking_ref_name("refs/heads/master".try_into()?, remote::Direction::Fetch)
                 .expect("Remote Merge ref exists")
                 .expect("Remote Merge ref is valid")
                 .as_bstr(),
@@ -109,7 +109,7 @@ mod branch_remote {
         );
         for direction in [remote::Direction::Fetch, remote::Direction::Push] {
             assert_eq!(
-                repo.branch_remote_name("main", direction)
+                repo.branch_remote_name("master", direction)
                     .expect("Remote name exists")
                     .as_ref(),
                 "remote_repo"
@@ -150,16 +150,16 @@ mod branch_remote {
         let repo = repo("fetch")?;
 
         assert_eq!(
-            repo.branch_remote_ref_name("refs/heads/main".try_into()?, remote::Direction::Push)
+            repo.branch_remote_ref_name("refs/heads/master".try_into()?, remote::Direction::Push)
                 .expect("exists")?
                 .shorten(),
-            "main",
+            "master",
             "by default, there is a 1:1 mapping due to `push.default=simple`"
         );
 
         for direction in [remote::Direction::Fetch, remote::Direction::Push] {
             assert_eq!(
-                repo.branch_remote_tracking_ref_name("refs/heads/main".try_into()?, direction)
+                repo.branch_remote_tracking_ref_name("refs/heads/master".try_into()?, direction)
                     .expect("exists")?
                     .as_bstr(),
                 "refs/remotes/remote_repo/main",
@@ -181,7 +181,7 @@ mod branch_remote {
         let repo = repo("push-mapped")?;
 
         assert_eq!(
-            repo.branch_remote_ref_name("refs/heads/main".try_into()?, remote::Direction::Push)
+            repo.branch_remote_ref_name("refs/heads/master".try_into()?, remote::Direction::Push)
                 .expect("exists")?
                 .shorten(),
             "remapped-main",
@@ -189,14 +189,14 @@ mod branch_remote {
         );
 
         assert_eq!(
-            repo.branch_remote_tracking_ref_name("refs/heads/main".try_into()?, remote::Direction::Push)
+            repo.branch_remote_tracking_ref_name("refs/heads/master".try_into()?, remote::Direction::Push)
                 .expect("exists")?
                 .as_bstr(),
             "refs/remotes/origin/remapped-main",
             "the first matching push-spec maps the branch to another head, then it's mapped with fetch-specs"
         );
         assert_eq!(
-            repo.branch_remote_tracking_ref_name("refs/heads/main".try_into()?, remote::Direction::Fetch)
+            repo.branch_remote_tracking_ref_name("refs/heads/master".try_into()?, remote::Direction::Fetch)
                 .expect("exists")?
                 .as_bstr(),
             "refs/remotes/origin/main",
@@ -207,8 +207,8 @@ mod branch_remote {
             repo.branch_remote_ref_name("refs/heads/feature".try_into()?, remote::Direction::Fetch)
                 .expect("exists")?
                 .shorten(),
-            "main",
-            "branch.feature.merge=refs/heads/main is causing the fetch remote to be remapped"
+            "master",
+            "branch.feature.merge=refs/heads/master is causing the fetch remote to be remapped"
         );
 
         assert_eq!(
@@ -242,19 +242,19 @@ mod branch_remote {
         let repo = repo("push-missing")?;
 
         assert!(
-            repo.branch_remote_ref_name("refs/heads/main".try_into()?, remote::Direction::Push)
+            repo.branch_remote_ref_name("refs/heads/master".try_into()?, remote::Direction::Push)
                 .is_none(),
             "there were push specs, but none matched, and we don't regard the push.default in this case, so end up with no match"
         );
 
         assert!(
-            repo.branch_remote_tracking_ref_name("refs/heads/main".try_into()?, remote::Direction::Push)
+            repo.branch_remote_tracking_ref_name("refs/heads/master".try_into()?, remote::Direction::Push)
                 .is_none(),
             "the same thing happens when getting the tracking branch - after all it depends on the remote reference"
         );
 
         assert_eq!(
-            repo.branch_remote_tracking_ref_name("refs/heads/main".try_into()?, remote::Direction::Fetch)
+            repo.branch_remote_tracking_ref_name("refs/heads/master".try_into()?, remote::Direction::Fetch)
                 .expect("exists")?
                 .shorten(),
             "origin/main",
@@ -272,14 +272,14 @@ mod branch_remote {
             repo.config_snapshot_mut()
                 .set_value(&Push::DEFAULT, same_name_default)?;
             assert_eq!(
-                repo.branch_remote_ref_name("refs/heads/main".try_into()?, remote::Direction::Push)
+                repo.branch_remote_ref_name("refs/heads/master".try_into()?, remote::Direction::Push)
                     .expect("exists")?
                     .shorten(),
-                "main",
+                "master",
                 "there was no push spec, `branch.main.merge` points to another branch, but we have a config override"
             );
             assert_eq!(
-                repo.branch_remote_tracking_ref_name("refs/heads/main".try_into()?, remote::Direction::Push)
+                repo.branch_remote_tracking_ref_name("refs/heads/master".try_into()?, remote::Direction::Push)
                     .expect("exists")?
                     .shorten(),
                 "origin/main",
@@ -289,14 +289,14 @@ mod branch_remote {
 
         repo.config_snapshot_mut().set_value(&Push::DEFAULT, "upstream")?;
         assert_eq!(
-            repo.branch_remote_ref_name("refs/heads/main".try_into()?, remote::Direction::Push)
+            repo.branch_remote_ref_name("refs/heads/master".try_into()?, remote::Direction::Push)
                 .expect("exists")?
                 .shorten(),
             "other",
             "`branch.main.merge` is configured as `refs/heads/other`, which is what we use with `push.default=upstream`"
         );
         assert_eq!(
-            repo.branch_remote_tracking_ref_name("refs/heads/main".try_into()?, remote::Direction::Push)
+            repo.branch_remote_tracking_ref_name("refs/heads/master".try_into()?, remote::Direction::Push)
                 .expect("exists")?
                 .shorten(),
             "origin/other",
@@ -305,12 +305,12 @@ mod branch_remote {
 
         repo.config_snapshot_mut().set_value(&Push::DEFAULT, "simple")?;
         assert_eq!(
-            repo.branch_remote_ref_name("refs/heads/main".try_into()?, remote::Direction::Push).transpose()?,
+            repo.branch_remote_ref_name("refs/heads/master".try_into()?, remote::Direction::Push).transpose()?,
             None,
             "simple requires that the upstream matches the current branch, which isn't the case as `branch.main.merge` points to 'other'"
         );
         assert_eq!(
-            repo.branch_remote_tracking_ref_name("refs/heads/main".try_into()?, remote::Direction::Push)
+            repo.branch_remote_tracking_ref_name("refs/heads/master".try_into()?, remote::Direction::Push)
                 .transpose()?,
             None,
         );

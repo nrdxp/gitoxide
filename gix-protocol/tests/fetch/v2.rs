@@ -153,7 +153,7 @@ async fn ls_remote_abort_in_prep_ls_refs() -> crate::Result {
 async fn ref_in_want() -> crate::Result {
     let out = Vec::new();
     let mut delegate = CloneRefInWantDelegate {
-        want_refs: vec!["refs/heads/main".into()],
+        want_refs: vec!["refs/heads/master".into()],
         ..CloneRefInWantDelegate::default()
     };
     let mut transport = transport(
@@ -179,7 +179,7 @@ async fn ref_in_want() -> crate::Result {
     assert_eq!(
         delegate.wanted_refs,
         vec![handshake::Ref::Direct {
-            full_ref_name: "refs/heads/main".into(),
+            full_ref_name: "refs/heads/master".into(),
             object: oid("9e320b9180e0b5580af68fa3255b7f3d9ecd5af0"),
         }]
     );
@@ -191,7 +191,7 @@ async fn ref_in_want() -> crate::Result {
 0014agent={}
 0001000ethin-pack
 000eofs-delta
-001dwant-ref refs/heads/main
+001dwant-ref refs/heads/master
 0009done
 00000000",
             gix_protocol::agent(agent)

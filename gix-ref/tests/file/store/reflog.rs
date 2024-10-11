@@ -32,7 +32,7 @@ mod iter_and_iter_rev {
         let log = store.reflog_iter("HEAD", &mut buf)?.expect("exists");
         assert_eq!(log.filter_map(Result::ok).count(), 5);
 
-        let log = store.reflog_iter("refs/heads/main", &mut buf)?.expect("exists");
+        let log = store.reflog_iter("refs/heads/master", &mut buf)?.expect("exists");
         assert_eq!(log.filter_map(Result::ok).count(), 5);
         Ok(())
     }
@@ -62,7 +62,7 @@ mod iter_rev {
         let log = store.reflog_iter_rev("HEAD", &mut buf)?.expect("exists");
         assert_eq!(log.filter_map(Result::ok).count(), 5);
 
-        let log = store.reflog_iter_rev("refs/heads/main", &mut buf)?.expect("exists");
+        let log = store.reflog_iter_rev("refs/heads/master", &mut buf)?.expect("exists");
         assert_eq!(log.filter_map(Result::ok).count(), 5);
         Ok(())
     }

@@ -72,7 +72,7 @@ fn reference_with_equally_named_empty_or_non_empty_directory_already_in_place_ca
                     change: Change::Update {
                         log: LogChange::default(),
                         expected: PreviousValue::MustNotExist,
-                        new: Target::Symbolic("refs/heads/main".try_into().unwrap()),
+                        new: Target::Symbolic("refs/heads/master".try_into().unwrap()),
                     },
                     name: "HEAD".try_into()?,
                     deref: false,
@@ -371,7 +371,7 @@ fn cancellation_after_preparation_leaves_no_change() -> crate::Result {
     );
 
     let tx = tx.prepare(
-        Some(create_symbolic_at("HEAD", "refs/heads/main")),
+        Some(create_symbolic_at("HEAD", "refs/heads/master")),
         Fail::Immediately,
         Fail::Immediately,
     )?;
@@ -711,7 +711,7 @@ fn write_reference_to_which_head_points_to_does_not_update_heads_reflog_even_tho
 fn packed_refs_are_looked_up_when_checking_existing_values() -> crate::Result {
     let (_keep, store) = store_writable("make_packed_ref_repository.sh")?;
     assert!(
-        store.try_find_loose("main")?.is_none(),
+        store.try_find_loose("master")?.is_none(),
         "no loose main available, it's packed"
     );
     let new_id = hex_to_id("0000000000000000000000000000000000000001");
@@ -729,7 +729,7 @@ fn packed_refs_are_looked_up_when_checking_existing_values() -> crate::Result {
                     expected: PreviousValue::MustExistAndMatch(Target::Object(old_id)),
                     new: Target::Object(new_id),
                 },
-                name: "refs/heads/main".try_into()?,
+                name: "refs/heads/master".try_into()?,
                 deref: false,
             }),
             Fail::Immediately,
@@ -741,12 +741,12 @@ fn packed_refs_are_looked_up_when_checking_existing_values() -> crate::Result {
 
     let packed = store.open_packed_buffer().unwrap().expect("packed refs is available");
     assert_eq!(
-            packed.find("main")?.target(),
+            packed.find("master")?.target(),
             old_id,
             "packed refs aren't rewritten, the change goes into the loose ref instead which shadows packed refs of same name"
         );
     assert_eq!(
-        store.find_loose("main")?.target.try_id(),
+        store.find_loose("master")?.target.try_id(),
         Some(new_id.as_ref()),
         "the new id was written to the loose ref"
     );

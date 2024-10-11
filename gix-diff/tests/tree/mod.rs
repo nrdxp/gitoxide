@@ -119,7 +119,7 @@ mod changes {
                         .unwrap()
                         .join("refs")
                         .join("heads")
-                        .join("main"),
+                        .join("master"),
                 )
                 .expect("head ref")
                 .as_bstr()

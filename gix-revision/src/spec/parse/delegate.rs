@@ -9,7 +9,7 @@ use bstr::BStr;
 /// Note that when dereferencing `HEAD` implicitly, a revision must be set for later navigation.
 pub trait Revision {
     /// Resolve `name` as reference which might not be a valid reference name. The name may be partial like `main` or full like
-    /// `refs/heads/main` solely depending on the users input.
+    /// `refs/heads/master` solely depending on the users input.
     /// Symbolic referenced should be followed till their object, but objects **must not yet** be peeled.
     fn find_ref(&mut self, name: &BStr) -> Option<()>;
 

@@ -20,7 +20,7 @@ mod sibling_branch {
     fn push_and_upstream() -> crate::Result {
         let repo = repo("complex_graph").unwrap();
         for op in ["upstream", "push"] {
-            for branch in ["", "main"] {
+            for branch in ["", "master"] {
                 let actual = parse_spec(format!("{branch}@{{{op}}}"), &repo)?;
                 assert_eq!(
                     actual.first_reference().expect("set").name.as_bstr(),
@@ -78,7 +78,7 @@ fn names_are_made_available_via_references() {
     let (a, b) = spec.clone().into_references();
     assert_eq!(
         a.as_ref().map(|r| r.name().as_bstr().to_string()),
-        Some("refs/heads/main".into())
+        Some("refs/heads/master".into())
     );
     assert_eq!(
         b.as_ref().map(|r| r.name().as_bstr().to_string()),

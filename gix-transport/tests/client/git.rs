@@ -165,7 +165,7 @@ async fn push_v1_simulated() -> crate::Result {
 
     let mut writer = c.request(client::WriteMode::Binary, client::MessageKind::Flush, false)?;
     let expected = fixture_bytes("v1/push.request");
-    writer.write_all(b"7c09ba0c4c3680af369bda4fc8e3c58d3fccdc76 32690d87d3943c7c0dda81246d0cde344ca7e633 refs/heads/main\0 report-status-v2 side-band-64k object-format=sha1 agent=git/2.37.1.(Apple.Git-137.1)").await?;
+    writer.write_all(b"7c09ba0c4c3680af369bda4fc8e3c58d3fccdc76 32690d87d3943c7c0dda81246d0cde344ca7e633 refs/heads/master\0 report-status-v2 side-band-64k object-format=sha1 agent=git/2.37.1.(Apple.Git-137.1)").await?;
     writer.write_message(client::MessageKind::Flush).await?;
     {
         let (mut write, mut read) = writer.into_parts();
@@ -191,7 +191,7 @@ async fn push_v1_simulated() -> crate::Result {
         }
         assert_eq!(
             info,
-            &["000eunpack ok", "0017ok refs/heads/main", "0000"],
+            &["000eunpack ok", "0017ok refs/heads/master", "0000"],
             "this seems to be a packetline encoding within a packetline encoding! Including a flush package. Strange, but it's the real deal."
         );
         let expected_progress = &["Resolving deltas:   0% (0/2)\r", 

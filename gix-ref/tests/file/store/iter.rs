@@ -129,7 +129,7 @@ mod with_namespace {
             vec![
                 "refs/heads/d1",
                 "refs/heads/dt1",
-                "refs/heads/main",
+                "refs/heads/master",
                 "refs/tags/dt1",
                 "refs/tags/t1"
             ],
@@ -293,7 +293,7 @@ fn loose_iter_with_broken_refs() -> crate::Result {
             "d1",
             "heads/d1",
             "heads/dt1",
-            "heads/main",
+            "heads/master",
             "heads/multi-link-target1",
             "loop-a",
             "loop-b",
@@ -345,7 +345,7 @@ fn loose_iter_with_prefix() -> crate::Result {
         vec![
             "refs/heads/d1",
             "refs/heads/dt1",
-            "refs/heads/main",
+            "refs/heads/master",
             "refs/heads/multi-link-target1",
         ]
         .into_iter()
@@ -394,7 +394,7 @@ fn overlay_iter() -> crate::Result {
     assert_eq!(
         ref_names,
         vec![
-            (b"refs/heads/main".as_bstr().to_owned(), Object(c1)),
+            (b"refs/heads/master".as_bstr().to_owned(), Object(c1)),
             ("refs/heads/newer-as-loose".into(), Object(c2)),
             (
                 "refs/remotes/origin/HEAD".into(),
@@ -440,7 +440,7 @@ fn overlay_prefixed_iter() -> crate::Result {
     assert_eq!(
         ref_names,
         vec![
-            (b"refs/heads/main".as_bstr().to_owned(), Object(c1)),
+            (b"refs/heads/master".as_bstr().to_owned(), Object(c1)),
             ("refs/heads/newer-as-loose".into(), Object(c2)),
         ]
     );
@@ -458,6 +458,6 @@ fn overlay_partial_prefix_iter() -> crate::Result {
         .map(|r| r.map(|r| (r.name.as_bstr().to_owned(), r.target)))
         .collect::<Result<Vec<_>, _>>()?;
     let c1 = hex_to_id("134385f6d781b7e97062102c6a483440bfda2a03");
-    assert_eq!(ref_names, vec![(b"refs/heads/main".as_bstr().to_owned(), Object(c1)),]);
+    assert_eq!(ref_names, vec![(b"refs/heads/master".as_bstr().to_owned(), Object(c1)),]);
     Ok(())
 }
